@@ -49,6 +49,18 @@ app.add_middleware(
 @app.get("/test")
 def test():
     return {"message": "CORS is working"}
+    from fastapi.responses import JSONResponse
+
+@app.options("/api/explain")
+async def explain_options():
+    return JSONResponse(
+        content={"message": "OK"},
+        headers={
+            "Access-Control-Allow-Origin": "https://arogya-updated.vercel.app",
+            "Access-Control-Allow-Methods": "POST, OPTIONS",
+            "Access-Control-Allow-Headers": "*",
+        },
+    )
 
 @app.exception_handler(RequestValidationError)
 async def _validation_error_handler(
